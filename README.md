@@ -1,6 +1,7 @@
 # Vial-Take-Home-Assignment
 
-## Take Home Assignment for Vial
+Hello! This is my take home assignment for Vial. Implemented all the required features + the optional ones too!
+Below are the steps to run the project and also a video demo with commentary in regards to the project, cheers!
 
 ### Steps to run project:
 
