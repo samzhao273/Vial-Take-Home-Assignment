@@ -1,29 +1,29 @@
 
 import { useEffect, useState } from "react";
-import { fetchSubjectsData } from "../functions/fetchSubjects";
+import SubjectTable from "../components/subjectTable";
 
-
- export default function SubjectDataHome() {
+export default function SubjectDataHome() {
     const [subjectsData, setSubjectsData] = useState([]);
-    // const [isLoading, setIsLoading] = useState<boolean>();
 
     // Use Effect for updating UI when fetching data 
     useEffect(() => {
-        const loadSubjects = async () => {
-          try {
-            const fetchedSubjects = await fetchSubjectsData();
-            setSubjectsData(fetchedSubjects);
-          } catch (error) {
-            console.error("Error loading subjects:", error);
-          }
-        };
-        loadSubjects();
-      }, []);
-    
+        const proxyUrl = 'https://corsproxy.io/?';
+        const apiUrl = 'https://us-central1-vial-development.cloudfunctions.net/function-1/subjects';
+        fetch(`${proxyUrl}${apiUrl}`)
+            .then(response => response.json())
+            .then(data => {
+                setSubjectsData(data.data);
+                console.log(data.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data: ', error);
+            });
+    }, []);
 
 
-    // Returning the subject data to check if fetch hworks
     return (
-        <div>{subjectsData}</div>
+        <div>
+            <SubjectTable data={subjectsData}></SubjectTable>
+        </div>
     )
 }
