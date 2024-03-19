@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import SubjectTable from "../components/subjectTable";
 import { Divider } from "@mui/material";
@@ -24,7 +23,7 @@ export default function SubjectDataHome() {
 
     return (
         <div style={{ margin: "24px 48px", alignContent: "center", justifyContent: "center" }}>
-            <Divider style={{ paddingTop: "20px", fontSize: "20px" , paddingBottom: "20px"}}>
+            <Divider style={{ paddingTop: "20px", fontSize: "20px", paddingBottom: "20px" }}>
                 <img src={Vial} style={{ width: 50, height: 50 }}></img>
             </Divider>
             <SubjectTable data={subjectsData} />
