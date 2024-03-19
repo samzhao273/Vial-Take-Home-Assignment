@@ -70,7 +70,7 @@ export default function SubjectTable(props: ISubjectTableProps) {
 
     // Handles the filter event for the select filter component
     const handleFilter = (event: SelectChangeEvent<typeof selectFilter>) => {
-        
+
         // Get "value" from the event"s target object to get the options selected
         const {
             target: { value },
@@ -124,6 +124,10 @@ export default function SubjectTable(props: ISubjectTableProps) {
                     variant="filled"
                     value={searchInput}
                     onChange={handleSearch}
+                    className="searchInput"
+                    InputLabelProps={{
+                        style: { fontSize: 'small' } // Also sets the label font size to match
+                    }}
                 />
                 <Box style={{ paddingBottom: "10px" }}>
                     <InputLabel style={{ padding: "5px" }}>Filter</InputLabel>
@@ -132,7 +136,7 @@ export default function SubjectTable(props: ISubjectTableProps) {
                         value={selectFilter}
                         placeholder="Select Filter:"
                         onChange={(selected) => handleFilter(selected)}
-                        style={{ width: 300 }}
+                        className="selectFilter"
                     >
                         {filters.map((filter) => (
                             <MenuItem value={filter}>{filter}</MenuItem>

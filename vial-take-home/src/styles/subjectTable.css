@@ -32,3 +32,11 @@
 .dataGrid .MuiDataGrid-row:last-child .MuiDataGrid-cell {
   border-bottom: none;
 }
+
+.searchInput {
+  width: 250px;
+}
+
+.selectFilter {
+  width: 300px;
+}
