@@ -1,6 +1,9 @@
 
 import { useEffect, useState } from "react";
 import SubjectTable from "../components/subjectTable";
+import Header from "../components/header";
+import { Divider } from "@mui/material";
+import Vial from "../assets/vial.svg";
 
 export default function SubjectDataHome() {
     const [subjectsData, setSubjectsData] = useState([]);
@@ -22,8 +25,11 @@ export default function SubjectDataHome() {
 
 
     return (
-        <div style={{ margin: "24px 48px", alignContent: "center" }}>
-            <SubjectTable data = {subjectsData}/>
+        <div style={{ margin: "24px 48px", alignContent: "center", justifyContent: "center" }}>
+            <Divider style={{ paddingTop: "20px", fontSize: "20px" , paddingBottom: "20px"}}>
+                <img src={Vial} style={{ width: 36, height: 36 }}></img>
+            </Divider>
+            <SubjectTable data={subjectsData} />
         </div>
     )
 }

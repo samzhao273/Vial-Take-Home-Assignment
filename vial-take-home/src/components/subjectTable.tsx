@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import Box from '@mui/material/Box';
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { ISubjectTableProps } from "../types/ISubjectTableProps";
 import "./styles/subjectTable.css"
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { MenuItem, OutlinedInput } from "@mui/material";
+import { Box, InputLabel, OutlinedInput, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material'
+
 
 
 export default function SubjectTable(props: ISubjectTableProps) {
@@ -21,14 +20,14 @@ export default function SubjectTable(props: ISubjectTableProps) {
         {
             field: 'id',
             headerName: 'ID',
-            minWidth: 325,
+            flex: 1,
             headerAlign: 'left',
             align: 'left',
         },
         {
             field: 'name',
             headerName: 'Name',
-            minWidth: 150,
+            flex: 1,
             headerAlign: 'left',
             align: 'left'
         },
@@ -42,21 +41,21 @@ export default function SubjectTable(props: ISubjectTableProps) {
         {
             field: 'gender',
             headerName: 'Gender',
-            minWidth: 150,
+            flex: 1,
             headerAlign: 'left',
             align: 'left'
         },
         {
             field: 'diagnosisDate',
             headerName: 'Diagnosis Date',
-            minWidth: 220,
+            flex: 1,
             headerAlign: 'left',
             align: 'left'
         },
         {
             field: 'status',
             headerName: 'Status',
-            minWidth: 150,
+            flex: 1,
             headerAlign: 'left',
             align: 'left'
         },
@@ -105,20 +104,27 @@ export default function SubjectTable(props: ISubjectTableProps) {
 
     return (
         <div style={{ display: 'Flex', justifyContent: 'center', flexDirection: 'column' }}>
-            <Select
-                labelId="demo-multiple-name-label"
-                id="demo-multiple-name"
-                multiple
-                value={selectFilter}
-                onChange={handleChange}
-                input={<OutlinedInput label="filter" />}
-                MenuProps={MenuProps}
-            >
-                {filters.map((filter) => (
-                    <MenuItem value={filter}>{filter}</MenuItem>
-                ))}
-            </Select>
-            <Box sx={{ height: 400, width: '80%%' }}>
+            <div className="tableFilters">
+                <TextField label="Search By Name" variant="filled" />
+                <div>
+                    <InputLabel id = "demo-multiple-filter-label">Filter</InputLabel>
+                    <Select
+                        labelId="demo-multiple-filter-label"
+                        id="demo-multiple-filter"
+                        multiple
+                        value={selectFilter}
+                        onChange={handleChange}
+                        input={<OutlinedInput label="demo-multiple-filter-label" />}
+                        MenuProps={MenuProps}
+                    >
+                        {filters.map((filter) => (
+                            <MenuItem value={filter}>{filter}</MenuItem>
+                        ))}
+                    </Select>
+
+                </div>
+            </div>
+            <Box> 
                 <DataGrid
                     rows={rows}
                     columns={columns}

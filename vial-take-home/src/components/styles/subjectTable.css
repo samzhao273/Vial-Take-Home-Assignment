@@ -1,35 +1,44 @@
-/* Add borders to the table cells */
-.mantine-Table th, .mantine-Table td {
-    border: 1px solid #e0e0e0; /* Light grey border; adjust color as needed */
+/* styles/subjectTable.css */
+
+.responsiveDataGridContainer {
+    height: 400px;
+    width: 10%;
+    /* Default to full width */
 }
 
-/* Add borders to the table rows */
-.mantine-Table tr {
-    border: 1px solid #e0e0e0; /* Light grey border; adjust color as needed */
+/* Small screens */
+@media (min-width: 600px) {
+    .responsiveDataGridContainer {
+        width: 90%;
+    }
 }
 
-/* Optional: Add border to the table itself */
-.mantine-Table-table{
-    border-collapse: collapse; /* Ensure borders collapse into a single border */
-    width: 100%; /* Ensure table width is 100% */
-    border: 1px solid #e0e0e0; /* Light grey border; adjust color as needed */
+/* Medium screens */
+@media (min-width: 960px) {
+    .responsiveDataGridContainer {
+        width: 80%;
+    }
 }
 
-.subjectTable th, .subjectTable td {
-    border: 1px solid #e0e0e0;
+/* Large screens */
+@media (min-width: 1280px) {
+    .responsiveDataGridContainer {
+        width: 70%;
+    }
 }
 
-.subjectTable tr {
-    border: 1px solid #e0e0e0;
+/* Extra large screens */
+@media (min-width: 1920px) {
+    .responsiveDataGridContainer {
+        width: 60%;
+    }
 }
 
-.subjectTable {
-    border-collapse: collapse;
+.tableFilters {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     width: 100%;
-    border: 1px solid #e0e0e0;
+    align-items: center;
+    gap: 12px;
 }
-
-.super-app-theme--header {
-    font-weight: 'bold',
-}
-
