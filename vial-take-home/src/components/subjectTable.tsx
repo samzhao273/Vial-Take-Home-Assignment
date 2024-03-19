@@ -62,7 +62,13 @@ export default function SubjectTable(props: ISubjectTableProps) {
     ];
 
     // Handling the filter Change
-    const handleChange = (event) => {
+    const handleFilter = (filters: string[]) => {
+        const genderFilter: string[] = [];
+        const statusFilter: string[] = [];
+        filters.forEach((filter) => {
+            if filter == "Male"
+        })
+
         const {
             target: { value },
         } = event;
@@ -90,7 +96,8 @@ export default function SubjectTable(props: ISubjectTableProps) {
             gender: subject.gender, diagnosisDate: subject.diagnosisDate.substring(0, 10), status: subject.status
         }
     ));
-
+    
+    // Filter labels
     const filters = [
         'Male',
         'Female',
@@ -103,27 +110,25 @@ export default function SubjectTable(props: ISubjectTableProps) {
     //   }, [data]);
 
     return (
-        <div style={{ display: 'Flex', justifyContent: 'center', flexDirection: 'column' }}>
-            <div className="tableFilters">
-                <TextField label="Search By Name" variant="filled" />
-                <div>
-                    <InputLabel id = "demo-multiple-filter-label">Filter</InputLabel>
+        <div style={{ display: 'Flex', justifyContent: 'center', flexDirection: 'column' ,paddingBottom:'5px'}}>
+            <Box className="tableFilters">
+                <TextField label="Search By Name:" variant="filled" />
+                <Box style={{paddingBottom: "10px"}}>
+                    <InputLabel id = "demo-multiple-filter-label" style={{padding:"5px"}}>Filter</InputLabel>
                     <Select
-                        labelId="demo-multiple-filter-label"
-                        id="demo-multiple-filter"
                         multiple
                         value={selectFilter}
-                        onChange={handleChange}
+                        onChange={handleFilter}
                         input={<OutlinedInput label="demo-multiple-filter-label" />}
                         MenuProps={MenuProps}
+                        style={{width: 300}}
                     >
                         {filters.map((filter) => (
                             <MenuItem value={filter}>{filter}</MenuItem>
                         ))}
                     </Select>
-
-                </div>
-            </div>
+                </Box>
+            </Box>
             <Box> 
                 <DataGrid
                     rows={rows}
