@@ -22,8 +22,8 @@ export default function SubjectDataHome() {
 
 
     return (
-        <div>
-            <SubjectTable data={subjectsData}></SubjectTable>
+        <div style={{ margin: "24px 48px", alignContent: "center" }}>
+            <SubjectTable data = {subjectsData}/>
         </div>
     )
 }

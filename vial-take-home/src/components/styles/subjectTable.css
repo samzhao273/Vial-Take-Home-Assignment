@@ -1,0 +1,30 @@
+/* Add borders to the table cells */
+.mantine-Table th, .mantine-Table td {
+    border: 1px solid #e0e0e0; /* Light grey border; adjust color as needed */
+}
+
+/* Add borders to the table rows */
+.mantine-Table tr {
+    border: 1px solid #e0e0e0; /* Light grey border; adjust color as needed */
+}
+
+/* Optional: Add border to the table itself */
+.mantine-Table-table{
+    border-collapse: collapse; /* Ensure borders collapse into a single border */
+    width: 100%; /* Ensure table width is 100% */
+    border: 1px solid #e0e0e0; /* Light grey border; adjust color as needed */
+}
+
+.subjectTable th, .subjectTable td {
+    border: 1px solid #e0e0e0;
+}
+
+.subjectTable tr {
+    border: 1px solid #e0e0e0;
+}
+
+.subjectTable {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+}
