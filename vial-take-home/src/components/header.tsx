@@ -1,4 +1,4 @@
-import "./styles/header.css";
+import "../styles/header.css";
 import Vial from "../assets/vial.svg";
 
 export default function Header() {

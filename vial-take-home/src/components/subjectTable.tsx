@@ -1,127 +1,138 @@
 import { useEffect, useState } from "react";
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ISubjectTableProps } from "../types/ISubjectTableProps";
-import "./styles/subjectTable.css"
-import { Box, InputLabel, OutlinedInput, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material'
-
+import "../styles/subjectTable.css"
+import { Box, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
 
 
 export default function SubjectTable(props: ISubjectTableProps) {
     const { data } = props;
-    // const [activePage, setActivePage] = useState<Boolean>();
     const [selectFilter, setSelectFilter] = useState<string[]>([]);
     const [genderFilters, setGenderFilters] = useState<string[]>([]);
     const [statusFilters, setStatusFilters] = useState<string[]>([]);
-    const [diagnosisDateFilters, setDiagnosisDateFilters] = useState<string[]>([]);
+    const [filteredData, setFilteredData] = useState<typeof data>([]);
+    const [searchInput, setSearchInput] = useState("");
 
-
-    // Static Column GridCol header with styling according to field
+    // Populate static column headers and name according to the field
     const columns: GridColDef[] = [
         {
-            field: 'id',
-            headerName: 'ID',
+            field: "id",
+            headerName: "ID",
             flex: 1,
-            headerAlign: 'left',
-            align: 'left',
+            headerAlign: "left",
+            align: "left",
+            headerClassName: "super-app-theme--header",
         },
         {
-            field: 'name',
-            headerName: 'Name',
+            field: "name",
+            headerName: "Name",
             flex: 1,
-            headerAlign: 'left',
-            align: 'left'
+            headerAlign: "left",
+            align: "left"
         },
         {
-            field: 'age',
-            headerName: 'Age',
-            type: 'number',
-            headerAlign: 'left',
-            align: 'left'
+            field: "age",
+            headerName: "Age",
+            type: "number",
+            headerAlign: "left",
+            align: "left"
         },
         {
-            field: 'gender',
-            headerName: 'Gender',
+            field: "gender",
+            headerName: "Gender",
             flex: 1,
-            headerAlign: 'left',
-            align: 'left'
+            headerAlign: "left",
+            align: "left"
         },
         {
-            field: 'diagnosisDate',
-            headerName: 'Diagnosis Date',
+            field: "diagnosisDate",
+            headerName: "Diagnosis Date",
             flex: 1,
-            headerAlign: 'left',
-            align: 'left'
+            headerAlign: "left",
+            align: "left"
         },
         {
-            field: 'status',
-            headerName: 'Status',
+            field: "status",
+            headerName: "Status",
             flex: 1,
-            headerAlign: 'left',
-            align: 'left'
+            headerAlign: "left",
+            align: "left"
         },
     ];
 
-    // Handling the filter Change
-    const handleFilter = (filters: string[]) => {
-        const genderFilter: string[] = [];
-        const statusFilter: string[] = [];
-        filters.forEach((filter) => {
-            if filter == "Male"
-        })
+    // Static fields of filter labels
+    const filters = [
+        "Male",
+        "Female",
+        "Active",
+        "Inactive",
+    ];
 
+    // Handles the filter event for the select filter component
+    const handleFilter = (event: SelectChangeEvent<typeof selectFilter>) => {
+        
+        // Get "value" from the event"s target object to get the options selected
         const {
             target: { value },
         } = event;
-        setSelectFilter(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+        const selectedFilters = typeof value === "string" ? value.split(",") : value;
+        setSelectFilter(selectedFilters);
+
+        // Set new arrays of either gender or status filter
+        const newGenderFilters = selectedFilters.filter(filter => filter === "Male" || filter === "Female");
+        const newStatusFilters = selectedFilters.filter(filter => filter === "Active" || filter === "Inactive");
+
+        setGenderFilters(newGenderFilters);
+        setStatusFilters(newStatusFilters);
+    };
+
+    // Handle search function to filter by name
+    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchInput(event.target.value);
     };
 
 
-    const ITEM_HEIGHT = 48;
-    const ITEM_PADDING_TOP = 8;
-    const MenuProps = {
-        PaperProps: {
-            style: {
-                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                width: 250,
-            },
-        },
-    };
+    // Whenever data is searched or filtered, update UI 
+    useEffect(() => {
+        // Apply filters to the data to update UI and return filtered data
+        const applyFilters = () => {
+            let filtered = data;
 
-    // Populate rows by mapping subject data from data props
-    const rows = data.map((subject) => (
-        {
-            id: subject.id, name: subject.name, age: subject.age,
-            gender: subject.gender, diagnosisDate: subject.diagnosisDate.substring(0, 10), status: subject.status
-        }
-    ));
-    
-    // Filter labels
-    const filters = [
-        'Male',
-        'Female',
-        'Active',
-        'Inactive',
-    ];
+            if (genderFilters.length > 0) {
+                filtered = filtered.filter(subject => genderFilters.includes(subject.gender));
+            }
+            if (statusFilters.length > 0) {
+                filtered = filtered.filter(subject => statusFilters.includes(subject.status));
+            }
+            if (searchInput) {
+                filtered = filtered.filter(subject =>
+                    subject.name.toLowerCase().trim().includes(searchInput.toLowerCase())
+                );
+            }
 
-    // useEffect(() => {
-    //     setSortedData(handleData(data, genderFilters, statusFilters,);
-    //   }, [data]);
+            return filtered;
+        };
+
+        setFilteredData(applyFilters());
+    }, [data, genderFilters, statusFilters, searchInput]);
 
     return (
-        <div style={{ display: 'Flex', justifyContent: 'center', flexDirection: 'column' ,paddingBottom:'5px'}}>
+        <div style={{ display: "Flex", justifyContent: "center", flexDirection: "column", paddingBottom: "5px" }}>
             <Box className="tableFilters">
-                <TextField label="Search By Name:" variant="filled" />
-                <Box style={{paddingBottom: "10px"}}>
-                    <InputLabel id = "demo-multiple-filter-label" style={{padding:"5px"}}>Filter</InputLabel>
+                <TextField
+                    label="Search By Name:"
+                    variant="filled"
+                    value={searchInput}
+                    onChange={handleSearch}
+                />
+                <Box style={{ paddingBottom: "10px" }}>
+                    <InputLabel style={{ padding: "5px" }}>Filter</InputLabel>
                     <Select
                         multiple
                         value={selectFilter}
-                        onChange={handleFilter}
-                        input={<OutlinedInput label="demo-multiple-filter-label" />}
-                        MenuProps={MenuProps}
-                        style={{width: 300}}
+                        placeholder="Select Filter:"
+                        onChange={(selected) => handleFilter(selected)}
+                        style={{ width: 300 }}
                     >
                         {filters.map((filter) => (
                             <MenuItem value={filter}>{filter}</MenuItem>
@@ -129,10 +140,17 @@ export default function SubjectTable(props: ISubjectTableProps) {
                     </Select>
                 </Box>
             </Box>
-            <Box> 
+            <Box>
                 <DataGrid
-                    rows={rows}
+                    rows={filteredData.map(subject => ({
+                        id: subject.id, name: subject.name, age: subject.age,
+                        gender: subject.gender, diagnosisDate: subject.diagnosisDate.substring(0, 10), status: subject.status
+                    }))}
                     columns={columns}
+                    pageSizeOptions={[5, 10, data.length]}
+                    disableRowSelectionOnClick
+                    autoHeight
+                    className="dataGrid"
                     initialState={{
                         pagination: {
                             paginationModel: {
@@ -140,9 +158,6 @@ export default function SubjectTable(props: ISubjectTableProps) {
                             },
                         },
                     }}
-                    pageSizeOptions={[5, 10, rows.length]}
-                    disableRowSelectionOnClick
-                    autoHeight
                 />
             </Box>
         </div>
